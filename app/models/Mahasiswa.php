@@ -26,6 +26,28 @@ class Mahasiswa {
         }
         return $data;
     }
+    public function getMahasiswaById($id_mhs) {
+        $query = "SELECT * FROM mahasiswa WHERE id_mhs = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_mhs);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+    
+    public function updateMahasiswa($id_mhs, $nama_mhs) {
+        $query = "UPDATE mahasiswa SET nama_mhs = ? WHERE id_mhs = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("si", $nama_mhs, $id_mhs);
+        return $stmt->execute();
+    }
+    public function deleteMahasiswa($id_mhs) {
+        $query = "DELETE FROM mahasiswa WHERE id_mhs = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_mhs);
+        return $stmt->execute();
+    }
+    
 }
 
 ?>
